@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 708, y: 471}
   m_MaxSize: {x: 18003, y: 14021}
   vertical: 0
-  controlID: 155
+  controlID: 150
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 433, y: 471}
   m_MaxSize: {x: 14003, y: 14021}
   vertical: 0
-  controlID: 94
+  controlID: 72
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 231, y: 471}
   m_MaxSize: {x: 10001, y: 14021}
   vertical: 1
-  controlID: 122
+  controlID: 19
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -239,10 +239,10 @@ MonoBehaviour:
     y: 0
     width: 1016
     height: 947
-  m_MinSize: {x: 202, y: 321}
-  m_MaxSize: {x: 4002, y: 8021}
+  m_MinSize: {x: 202, y: 342}
+  m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 95
+  controlID: 73
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -290,8 +290,8 @@ MonoBehaviour:
     y: 635
     width: 1016
     height: 312
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -443,9 +443,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 9ee4ffff
-      m_LastClickedID: -7010
-      m_ExpandedIDs: 9ee4ffff56f2ffff44fbffffca380000
+      m_SelectedIDs: 98390000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 62e0ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -507,19 +507,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders: []
+    m_Folders:
+    - Assets/Scripts
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\Unity Projects\Turruc and MGS
+  m_LastProjectPath: C:\dev\__Unity\Turruc-and-MGS\Turruc-and-MGS
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ca180000
     m_LastClickedID: 6346
-    m_ExpandedIDs: 00000000
+    m_ExpandedIDs: 000000009639000098390000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -547,21 +548,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 78b5ffffffffffff00000000c2370000e0370000
+    m_ExpandedIDs: 34d4ffffffffffff000000009639000098390000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: PlayerController
-      m_OriginalName: PlayerController
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 16066
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 9}
     m_SearchString: 
@@ -639,9 +640,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -9.728089, y: -0.684187, z: 4.2107897}
+    m_Target: {x: 22.332201, y: 14.59344, z: -7.6832743}
     speed: 2
-    m_Value: {x: -9.728089, y: -0.684187, z: 4.2107897}
+    m_Value: {x: 22.332201, y: 14.59344, z: -7.6832743}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -687,13 +688,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.14385052, y: 0.5600788, z: -0.099496715, w: -0.8097839}
+    m_Target: {x: -0.23380467, y: 0.55102056, z: -0.1643224, w: -0.7840542}
     speed: 2
-    m_Value: {x: -0.14384831, y: 0.5600702, z: -0.09949519, w: -0.8097714}
+    m_Value: {x: -0.23380102, y: 0.551012, z: -0.16431984, w: -0.784042}
   m_Size:
-    m_Target: 23.396568
+    m_Target: 47.316513
     speed: 2
-    m_Value: 23.396568
+    m_Value: 47.316513
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -798,7 +799,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -7010
+  m_LastSelectedObjectID: 14658
 --- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -900,4 +901,4 @@ MonoBehaviour:
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 217
+  m_LastVerticalScrollValue: 0
