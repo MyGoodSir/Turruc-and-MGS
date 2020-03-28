@@ -225,8 +225,8 @@ GameObject:
   - component: {fileID: 447588867}
   - component: {fileID: 447588866}
   - component: {fileID: 447588865}
-  - component: {fileID: 447588868}
   - component: {fileID: 447588864}
+  - component: {fileID: 447588868}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -335,10 +335,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 447588862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24ac0d8a946ed3743898efff9dcf90f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 42d8a0c1c6726ae42a5511cdc3fb7566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.25
+  health: 0
+  stamina: 0
+  lookSpeed: 1
   jumpForce: 300
   jumpCD: 2
 --- !u!1 &872179979

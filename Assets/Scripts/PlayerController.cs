@@ -2,60 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CharacterController
 {
-    Rigidbody body;
-    public float moveSpeed, jumpForce;
-    public float jumpCD;
-    float jumpTimer;
-
-    // Start is called before the first frame update
-    void Start()
+    float jumpTimer = 0;
+    
+    Vector3 Walk(float moveSpeed, Player p)
     {
-        body = GetComponent<Rigidbody>();
-        jumpTimer = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
         Vector3 moveDirection = new Vector3();
-
-        gameObject.transform.Rotate(0, Input.GetAxis("Horizontal"), 0);
-
         if (Input.GetKey(KeyCode.W))
-            moveDirection += gameObject.transform.TransformDirection(new Vector3(0, 0, 1));
-        
-        if(Input.GetKey(KeyCode.S))
-            moveDirection += gameObject.transform.TransformDirection(new Vector3(0, 0, -1 ));
-        
-        if(Input.GetKey(KeyCode.A))
-            moveDirection += gameObject.transform.TransformDirection(new Vector3(-1, 0, 0));
-        
-        if(Input.GetKey(KeyCode.D))
-            moveDirection += gameObject.transform.TransformDirection(new Vector3(1, 0, 0));
-        
+            moveDirection += p.gameObject.transform.TransformDirection(new Vector3(0, 0, 1));
 
-        if(moveDirection.x != 0 && moveDirection.y != 0)
+        if (Input.GetKey(KeyCode.S))
+            moveDirection += p.gameObject.transform.TransformDirection(new Vector3(0, 0, -1));
+
+        if (Input.GetKey(KeyCode.A))
+            moveDirection += p.gameObject.transform.TransformDirection(new Vector3(-1, 0, 0));
+
+        if (Input.GetKey(KeyCode.D))
+            moveDirection += p.gameObject.transform.TransformDirection(new Vector3(1, 0, 0));
+
+
+        if (moveDirection.x != 0 && moveDirection.y != 0)
             moveDirection /= Mathf.Sqrt(2);
 
-        moveDirection *= moveSpeed;
-        gameObject.transform.position += moveDirection;
+        return moveDirection * moveSpeed;
+    }
+    override public void ApplyMovement(Character c)
+    {
+        Player p = (Player)c;
+        Vector3 translationVector = Walk(p.moveSpeed, p);
+        Vector3 rotationVector = new Vector3(0, Input.GetAxis("Horizontal")*p.lookSpeed, 0);
+
+        p.gameObject.transform.Rotate(rotationVector);
+        p.gameObject.transform.position += translationVector;
+
         if (jumpTimer <= 0)
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                jumpTimer = jumpCD;
-                body.AddForce(new Vector3(0, jumpForce, 0));
+                jumpTimer = p.jumpCD;
+                p.getBody().AddForce(new Vector3(0, p.jumpForce, 0));
             }
         }
-        else if(jumpTimer > 0)
+        else if (jumpTimer > 0)
         {
             jumpTimer -= Time.deltaTime;
         }
-
-        }
+    }
 
 
 }
