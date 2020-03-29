@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Tools\2DShapeEditor\Editor\ShapeEditor.cs" />
     <Compile Include="Assets\Scripts\Tools\GradientEditor\Editor\GradientDrawer.cs" />
     <Compile Include="Assets\Scripts\Tools\GradientEditor\Editor\GradientEditor.cs" />
     <Compile Include="Assets\Tutorial_Info\Scripts\Editor\ReadmeEditor.cs" />

@@ -68,8 +68,16 @@
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
+    <Compile Include="Assets\Scripts\Tools\2DShapeEditor\Math\CompositeShape.cs" />
+    <Compile Include="Assets\Scripts\Tools\2DShapeEditor\Math\CompositeShapeData.cs" />
+    <Compile Include="Assets\Scripts\Tools\2DShapeEditor\Math\MG2DMath.cs" />
+    <Compile Include="Assets\Scripts\Tools\2DShapeEditor\Math\Polygon.cs" />
+    <Compile Include="Assets\Scripts\Tools\2DShapeEditor\Math\Shape.cs" />
+    <Compile Include="Assets\Scripts\Tools\2DShapeEditor\Math\Triangulator.cs" />
+    <Compile Include="Assets\Scripts\Tools\2DShapeEditor\ShapeCreator.cs" />
     <Compile Include="Assets\Scripts\Tools\GradientEditor\CustomGradient.cs" />
     <Compile Include="Assets\Scripts\Tools\GradientEditor\Test.cs" />
+    <Compile Include="Assets\Scripts\Tools\MGSUtil.cs" />
     <Compile Include="Assets\Tutorial_Info\Scripts\Readme.cs" />
     <None Include="Assets\Materials\Test.shader" />
     <Reference Include="Unity.Timeline.Editor">
