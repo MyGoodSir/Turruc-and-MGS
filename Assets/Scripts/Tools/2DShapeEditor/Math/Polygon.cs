@@ -52,7 +52,7 @@ public class Polygon
     }
     public Polygon(Vector2[] hull) : this(hull, new Vector2[0][])
     {
-
+        
     }
 
     bool PointsAreCounterClockwise(Vector2[] test)

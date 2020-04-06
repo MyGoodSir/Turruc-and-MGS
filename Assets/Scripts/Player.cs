@@ -10,19 +10,24 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
+    
         body = GetComponent<Rigidbody>();
-        controller = new PlayerController();
+        controller = new PlayerController(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        controller.ApplyMovement(this);
+        controller.UpdateMovementFlags();
     }
-    
-    public Rigidbody getBody()
+    private void FixedUpdate()
     {
-        return body;
+        controller.ApplyMovement();
+        
     }
+
+
+
+    
 
 }

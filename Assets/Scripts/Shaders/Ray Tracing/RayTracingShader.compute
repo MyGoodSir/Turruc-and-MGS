@@ -1,0 +1,127 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+float4x4 _CameraToWorld;
+float4x4 _CameraIP;
+Texture2D<float4> _Skybox;
+SamplerState sampler_Skybox;
+static const float PI = 3.1415926535f;
+
+struct Ray 
+{
+
+    float3 origin;
+    float3 direction;
+
+};
+
+struct Hit
+{
+    float3 pos;
+    float dist;
+    float3 normal;
+};
+
+Hit CreateHit()
+{
+    Hit h;
+    h.pos = float3(0.0f, 0.0f, 0.0f);
+    h.dist = 1.#INF;
+    h.normal = float3(0.0f, 0.0f, 0.0f);
+    return h;
+}
+
+Ray CreateRay(float3 origin, float3 direction) 
+{
+
+    Ray ray;
+    ray.origin = origin;
+    ray.direction = direction;
+    return ray;
+
+}
+
+void IntersectGround(Ray r, inout Hit best)
+{
+    float t = -r.origin.y / r.direction.y;
+    if (t > 0 && t < best.dist)
+    {
+        best.dist = t;
+        best.pos = r.origin + t * r.direction;
+        best.normal = float3(0.0f, 1.0f, 0.0f);
+    }
+}
+
+float3 Shade(inout Ray r, Hit h)
+{
+    if (h.dist < 1.#INF)
+    {
+        return h.normal * 0.5f + 0.5f;
+    }
+    else
+    {
+        float theta = acos(r.direction.y) / -PI;
+        float phi = atan2(r.direction.x, -r.direction.z) / -PI * 0.5f;
+
+        return _Skybox.SampleLevel(sampler_Skybox, float2(phi, theta), 0).xyz;
+    }
+}
+
+Ray CreateCameraRay(float2 uv)
+{
+    //cam origin to worldspace coords
+    float3 origin = mul(_CameraToWorld, float4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
+
+    //undo perspective projection of view-space position 'uv'
+    //basically, use the inverse of the matrix that the camera uses to translate 3d into 2d to translate 2d back into 3d
+    float3 direction = mul(_CameraIP, float4(uv, 0.0f, 1.0f)).xyz;
+    //direction vector to worldspace and then normalized
+    direction = mul(_CameraToWorld, float4(direction, 0.0f)).xyz;
+    direction = normalize(direction);
+
+    return CreateRay(origin, direction);
+}
+
+void IntersectSphere(Ray r, inout Hit best, float4 sphere)
+{
+    float3 d = r.origin - sphere.xyz;
+    float p1 = -dot(r.direction, d);
+    float p2sqr = p1 * p1 - dot(d, d) + sphere.w * sphere.w;
+    if (p2sqr < 0)
+        return;
+    float p2 = sqrt(p2sqr);
+    float t = p1 - p2 > 0 ? p1 - p2 : p1 + p2;
+    if (t > 0 && t < best.dist)
+    {
+        best.dist = t;
+        best.pos = r.origin + t * r.direction;
+        best.normal = normalize(best.pos - sphere.xyz);
+    }
+}
+
+Hit Trace(Ray r)
+{
+    Hit best = CreateHit();
+    IntersectGround(r, best);
+    IntersectSphere(r, best, float4(0.0f, 3.0f, 0.0f, 1.0f));
+    return best;
+}
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    uint width, height;
+    Result.GetDimensions(width, height);
+
+    //compress uv domain and codomain to (-1, 1)
+    float2 uv = float2((id.xy + float2(0.5f, 0.5f)) / float2(width, height) * 2.0f - 1.0f);
+
+    Ray r = CreateCameraRay(uv);
+
+    Hit h = Trace(r);
+    float3 result = Shade(r, h);
+    Result[id.xy] = float4(result, 1);
+}

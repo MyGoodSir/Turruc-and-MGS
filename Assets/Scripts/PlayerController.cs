@@ -5,48 +5,74 @@ using UnityEngine;
 public class PlayerController : CharacterController
 {
     float jumpTimer = 0;
-    
-    Vector3 Walk(float moveSpeed, Player p)
+
+
+    public PlayerController(Player parent) : base(parent) {  }
+
+    override public void UpdateMovementFlags()
+    {
+        this.movementFlags.forward = Input.GetKey(KeyCode.W);
+        this.movementFlags.backward = Input.GetKey(KeyCode.S);
+        this.movementFlags.left = Input.GetKey(KeyCode.A);
+        this.movementFlags.right = Input.GetKey(KeyCode.D);
+        this.movementFlags.jumping = Input.GetKey(KeyCode.Space);
+
+
+        Vector3 ground = GameObject.FindGameObjectWithTag("Ground").GetComponent<Collider>().ClosestPointOnBounds(parent.GetComponent<CapsuleCollider>().transform.position);
+        Vector3 cap = parent.GetComponent<CapsuleCollider>().ClosestPoint(ground);
+        this.movementFlags.isOnGround = cap.Equals(ground);
+    }
+
+    Vector3 GetMovementVector()
     {
         Vector3 moveDirection = new Vector3();
-        if (Input.GetKey(KeyCode.W))
-            moveDirection += p.gameObject.transform.TransformDirection(new Vector3(0, 0, 1));
 
-        if (Input.GetKey(KeyCode.S))
-            moveDirection += p.gameObject.transform.TransformDirection(new Vector3(0, 0, -1));
-
-        if (Input.GetKey(KeyCode.A))
-            moveDirection += p.gameObject.transform.TransformDirection(new Vector3(-1, 0, 0));
-
-        if (Input.GetKey(KeyCode.D))
-            moveDirection += p.gameObject.transform.TransformDirection(new Vector3(1, 0, 0));
+        float sine = Mathf.Sin(parent.gameObject.transform.eulerAngles.y * Mathf.PI / 180);
+        float cosine = Mathf.Cos(parent.gameObject.transform.eulerAngles.y * Mathf.PI / 180);
 
 
-        if (moveDirection.x != 0 && moveDirection.y != 0)
-            moveDirection /= Mathf.Sqrt(2);
+        if (this.movementFlags.forward)
+            moveDirection += parent.gameObject.transform.forward;
 
-        return moveDirection * moveSpeed;
+        if (this.movementFlags.backward)
+            moveDirection += parent.gameObject.transform.forward*-1;
+
+        if (this.movementFlags.left)
+            moveDirection += new Vector3(-cosine, 0, sine);
+
+        if (this.movementFlags.right)
+            moveDirection += new Vector3(cosine, 0, -sine);
+
+
+        moveDirection.Normalize();
+
+        return moveDirection * parent.moveSpeed;
     }
-    override public void ApplyMovement(Character c)
+    override public void ApplyMovement()
     {
-        Player p = (Player)c;
-        Vector3 translationVector = Walk(p.moveSpeed, p);
-        Vector3 rotationVector = new Vector3(0, Input.GetAxis("Horizontal")*p.lookSpeed, 0);
+        Vector3 translationVector = GetMovementVector();
 
-        p.gameObject.transform.Rotate(rotationVector);
-        p.gameObject.transform.position += translationVector;
+        Vector3 rotationVector = new Vector3(0, Input.GetAxis("Horizontal")* ((Player)parent).lookSpeed, 0);
+        parent.gameObject.transform.Rotate(rotationVector);
 
-        if (jumpTimer <= 0)
+
+        parent.getBody().velocity +=translationVector;
+        parent.getBody().velocity = Vector3.ClampMagnitude(parent.getBody().velocity, parent.maxSpeed);
+
+
+        if (movementFlags.canCurrentlyJump)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (movementFlags.jumping)
             {
-                jumpTimer = p.jumpCD;
-                p.getBody().AddForce(new Vector3(0, p.jumpForce, 0));
+                movementFlags.canCurrentlyJump = false;
+                movementFlags.jumping = true;
+                movementFlags.isOnGround = false;
+                parent.getBody().AddForce(new Vector3(0, ((Player)parent).jumpForce, 0));
             }
         }
-        else if (jumpTimer > 0)
+        else if (movementFlags.isOnGround)
         {
-            jumpTimer -= Time.deltaTime;
+            movementFlags.canCurrentlyJump = true;
         }
     }
 

@@ -18,5 +18,6 @@ public class ShapeCreator : MonoBehaviour
         CompositeShape cShape = new CompositeShape(shapes);
         meshFilter.mesh = cShape.GetMesh();
     }
+   
 }
 
